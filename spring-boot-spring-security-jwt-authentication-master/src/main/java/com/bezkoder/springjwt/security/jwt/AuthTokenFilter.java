@@ -28,6 +28,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
   private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
+  //please refer this -https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html
+  // and https://stackoverflow.com/questions/70101522/how-the-spring-security-authenticationmanager-authenticate-method-is-able-to-c
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
@@ -37,6 +39,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        
+       /* Next we create a new Authentication object. Spring Security does not care what type of Authentication implementation is set on the SecurityContext.  A more common production scenario is UsernamePasswordAuthenticationToken(userDetails, password, authorities)*/
         UsernamePasswordAuthenticationToken authentication =
             new UsernamePasswordAuthenticationToken(
                 userDetails,
