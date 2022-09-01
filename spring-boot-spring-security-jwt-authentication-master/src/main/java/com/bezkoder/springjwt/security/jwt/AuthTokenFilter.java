@@ -43,7 +43,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 null,
                 userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+       //SecurityContextHolder - The SecurityContextHolder is where Spring Security stores the details of who is authenticated.
+        //SecurityContext - is obtained from the SecurityContextHolder and contains the Authentication of the currently authenticated user.
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     } catch (Exception e) {
